@@ -57,9 +57,9 @@ public class ParserExercise {
     }
     
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ParserException {
         String input = "(3+2*(5+6))-(4+2123*3)";
-        ArrayList<Token> tokens = Lexer.lexRegex(input);
+        ArrayList<Token> tokens = Lexer.lex(input);
         Node<Token> tree = null;
         try {
             tree = Parser.parse(tokens);
