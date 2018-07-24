@@ -8,7 +8,6 @@ package parserexercise;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.*;
 
 public class ParserExercise {
 
@@ -32,7 +31,10 @@ public class ParserExercise {
             this.type = type;
             this.data = data;
         }
-
+        
+        public Token(TokenType type, char data) {
+            this(type, String.valueOf(data));
+        }
         @Override
         public String toString() {
             if(type != TokenType.BINARYOP){
@@ -45,26 +47,6 @@ public class ParserExercise {
         }
     }
 
-    public static ArrayList<Token> lex(String input) {
-        ArrayList<Token> tokens = new ArrayList<>();
-        StringBuilder tokenPatternsBuffer = new StringBuilder();
-        for (TokenType tokenType : TokenType.values()) {
-            tokenPatternsBuffer.append(String.format("|(?<%s>%s)", tokenType.name(), tokenType.pattern));
-        }
-        Pattern tokenPatterns = Pattern.compile(tokenPatternsBuffer.substring(1));
-
-        Matcher matcher = tokenPatterns.matcher(input);
-        while (matcher.find()) {
-            for (TokenType tokenType : TokenType.values()) {
-                if (tokenType != TokenType.WHITESPACE) {
-                    if (matcher.group(tokenType.name()) != null) {
-                        tokens.add(new Token(tokenType, matcher.group(tokenType.name())));
-                    }
-                }
-            }
-        }
-        return tokens;
-    }
     
     
     public static void printTokenList(ArrayList<Token> tokenList){
@@ -77,7 +59,7 @@ public class ParserExercise {
 
     public static void main(String args[]) {
         String input = "(3+2*(5+6))-(4+2123*3)";
-        ArrayList<Token> tokens = lex(input);
+        ArrayList<Token> tokens = Lexer.lexRegex(input);
         Node<Token> tree = null;
         try {
             tree = Parser.parse(tokens);
