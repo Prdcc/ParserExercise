@@ -16,7 +16,8 @@ public class ParserException extends Exception {
      * message.
      */
     public static enum ExceptionCode{
-        PARENTHESESWRONG("Mismatched parentheses"), TOOMANYNUMBERS("Unexpected number"), UNSUPPORTEDBINARYOP("Unsupported binary operation");
+        PARENTHESESWRONG("Mismatched parentheses"), TOOMANYNUMBERS("Unexpected number"), 
+        UNSUPPORTEDBINARYOP("Unsupported binary operation"), UNRECOGNISEDCHARACTER("Unrecognised character");
         String message;
         private ExceptionCode(String msg){
             message = msg;
